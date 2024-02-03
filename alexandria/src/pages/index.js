@@ -5,13 +5,11 @@ import Auth from "@/components/Auth";
 import { useState, useEffect } from "react";
 import StaticGenerationSearchParamsBailoutProvider from "next/dist/client/components/static-generation-searchparams-bailout-provider";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 const LIB_ROUTE = "/library"
 
 export default function Home() {
-
   const router = useRouter();
   const [token, setToken] = useState(null);
   const [user, setUser] = useState("");

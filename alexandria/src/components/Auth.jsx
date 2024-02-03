@@ -4,7 +4,6 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/util/firebase";
 dotenv.config();
 
-
 const Auth = ({ setToken, setUser, setEmail, token }) => {
     const handleGoogle = async (e) => {
         const provider = new GoogleAuthProvider();
