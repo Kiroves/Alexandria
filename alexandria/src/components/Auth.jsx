@@ -1,30 +1,25 @@
 import React from 'react'
 import dotenv from 'dotenv'
-import { createClient } from "@supabase/supabase-js";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "@/util/firebase";
 dotenv.config();
-//console.log(process.env.SUPABASE_KEY);
 
-const apiKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
-const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_KEY);
+
 const Auth = ({ setToken, setUser, setEmail, token }) => {
     const handleGoogle = async (e) => {
+        const provider = new GoogleAuthProvider();
         try {
-            async function handleSignInWithGoogle(response) {
-                const { data, error } = await supabase.auth.signInWithIdToken({
-                    provider: 'google',
-                })
-            }
-            console.log(data);
-            //const result = await signInWithPopup(auth, provider);
-            //const credential = GoogleAuthProvider.credentialFromResult(result);
-            //const token = response.credential;
-            //window.localStorage.setItem("token", token);
-            //window.localStorage.setItem("email", result.user.email);
-            //setToken(token);
-            //setUser(result.user.displayName);
-            //setEmail(result.user.email);
-        } catch (error) { }
+            const result = await signInWithPopup(auth, provider);
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            window.localStorage.setItem("token", token);
+            window.localStorage.setItem("email", result.user.email);
+            setToken(token);
+            setUser(result.user.displayName);
+            setEmail(result.user.email);
+        } catch (error) { 
+            console.log("error")
+        }
     };
     const handleSignOut = async () => {
         try {
@@ -37,9 +32,15 @@ const Auth = ({ setToken, setUser, setEmail, token }) => {
     };
   return (
     <div>
-          <button onClick={handleGoogle}>
-              Click me
-          </button>
+          {token ? (
+              <button onClick={handleSignOut} variant="ghost" className="">
+                  Sign Out
+              </button>
+          ) : (
+              <button onClick={handleGoogle} variant="ghost" className="">
+                  Sign in with Google
+              </button>
+          )}
     </div>
   )
 }
