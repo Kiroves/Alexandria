@@ -7,7 +7,7 @@ dotenv.config();
 const apiKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
 const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_KEY);
-const Navbar = ({ setToken, setUser, setEmail, token }) => {
+const Auth = ({ setToken, setUser, setEmail, token }) => {
     const handleGoogle = async (e) => {
         try {
             async function handleSignInWithGoogle(response) {
@@ -44,4 +44,4 @@ const Navbar = ({ setToken, setUser, setEmail, token }) => {
   )
 }
 
-export default Navbar
+export default Auth

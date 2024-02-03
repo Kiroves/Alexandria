@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/Auth";
+import Auth from "@/components/Auth";
 import { useState, useEffect } from "react";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function Home() {
   }, []);
     return (
 	<div>
+    <Auth/>
 	    <h1>Hello World</h1>
 	    <button type="button"
 		    onClick={() => router.push(LIB_ROUTE)}>
