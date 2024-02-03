@@ -1,18 +1,19 @@
-import fb from "../config/firebase.js";
-import { getFirestore } from "firebase/firestore";
-import { collection, doc, getDoc } from "firebase/firestore";
-
+import app from "../util/firebase.js"
 import { useRouter } from "next/router";
+
+import { getFirestore } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 import { useState, useEffect } from "react";
 
 const CHAT_ROUTE = "/chat"
 
 export default function Library() {
-    const db = getFirestore(fb);
-    const router = useRouter();
-    
+    const [ name, setName ] = useState("");
     const [ library, setLibrary ] = useState([]);
+
+    const db = getFirestore(app);
+    const router = useRouter();
 
     useEffect(() => {
 	const fetchDocument = async () => {
@@ -21,8 +22,8 @@ export default function Library() {
 		const userInfoSnap = await getDoc(userInfoRef);
 
 		if (userInfoSnap.exists()) {
-		    setLibrary(userInfoSnap.data());
-		    console.log(userInfoSnap.data());
+		    setName(userInfoSnap.data().name);
+		    setLibrary(userInfoSnap.data().library);
 		}
 	    } catch (err) {
 		console.error("There is an error with this request: " + err);
@@ -31,8 +32,6 @@ export default function Library() {
 
 	fetchDocument();
     }, []);
-   
-
     // const userInfoSnap = await getDoc(userInfoRef);
     
     const myBooks = [
@@ -43,21 +42,18 @@ export default function Library() {
     
     return (
 	<div>
-	    <h1>
-		This is my library of things
-	    </h1>
-	    
-	    {myBooks.map((book) => {
+	    <h1>Hello, {name}</h1>
+	    {library.map((document) => {
 		return (
-		    <div key={book.id}>
+		    <div key={document.bookId}>
 			<button
 			    type="button"
 			    onClick={() => router.push({
-				    pathname: `${CHAT_ROUTE}/${book.id}`,
-				    query: { chatId : book.id },
-				})
-			    }>
-			    {book.name}
+				pathname: `${CHAT_ROUTE}/${document.bookId}`,
+				query: { chatId : document.bookId },
+			    })
+				    }>
+			    {document.bookName}
 			</button>
 		    </div>
 		);
