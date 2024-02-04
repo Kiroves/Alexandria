@@ -90,6 +90,9 @@ export default function Library() {
     formData.append("name", name);
     formData.append("desc", desc);
     formData.append("email", window.localStorage.getItem("email"));
+    if (name === "" || desc === "" || file === "" || email === "") {
+      alert("Please fill in all required fields and try again.");
+    }
     try {
       setLoading(true);
       const res = await axios.post("http://127.0.0.1:5000/upload", formData, {
