@@ -19,6 +19,8 @@ export default function Library() {
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState(null);
 
+  const [change, setChange] = useState(false);
+
   const fileRef = useRef(null);
 
   const handleFileChange = (event) => {
@@ -72,7 +74,7 @@ export default function Library() {
     };
 
     getTextbooks();
-  }, []);
+  }, [change]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,6 +92,9 @@ export default function Library() {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      setIsOpen(false);
+      setChange(!change);
     } catch (err) {
       console.error(err);
     }
@@ -101,47 +106,47 @@ export default function Library() {
       <div className="grow h-full">
         {library.map((document) => {
           return (
-            <div key={document.bookId}>
-              <button
-                type="button"
-                onClick={() =>
-                  router.push({
-                    pathname: `${CHAT_ROUTE}/${document.bookId}`,
-                    query: { textbookId: document.bookId },
-                  })
-                }
-              >
-                {document.bookName}
-              </button>
-            </div>
+              <div key={document.bookId}>
+		  <button
+                      type="button"
+		  >
+		      e                      {document.bookName}
+		  </button>
+              </div>
           );
         })}
 
-        <div className="p-5 text-center">
-          <input
-            className="p-4 rounded-lg w-4/5"
-            type="text"
-            placeholder="Search"
-          ></input>
-        </div>
-
-        <div className="grid grid-cols-3 gap-16 mt-10 ml-28 mr-28">
-          <div
-            className=" text-white rounded-lg flex justify-center items-center overflow-hidden min-h-44 border border-dashed bg-transparent hover:border-blue-600 transition-all hover:text-blue-600 duration-100 hover:cursor-pointer text-5xl border-2"
-            onClick={() => {
-              setIsOpen(true);
-            }}
-          >
-            {" "}
-            +{" "}
+          <div className="p-5 text-center">
+              <input
+		  className="p-4 rounded-lg w-4/5"
+		  type="text"
+		  placeholder="Search"
+              ></input>
           </div>
-          {library.map((doc, index) => (
-            <div className="bg-white text-black overflow-hidden rounded-lg min-h-44 p-4">
-              <h1 className="mb-2 font-bold text-lg">{doc.name}</h1>
-              <p>{doc.desc}</p>
-            </div>
-          ))}
-        </div>
+
+          <div className="grid grid-cols-3 gap-16 mt-10 ml-28 mr-28">
+              <div
+		  className=" text-white rounded-lg flex justify-center items-center overflow-hidden min-h-44 border border-dashed bg-transparent hover:border-blue-600 transition-all hover:text-blue-600 duration-100 hover:cursor-pointer text-5xl border-2"
+		  onClick={() => {
+		      setIsOpen(true);
+		  }}
+              >
+		  {" "}
+		  +{" "}
+              </div>
+              {library.map((doc, index) => (
+		  <div className="bg-white text-black overflow-hidden rounded-lg min-h-44 p-4"
+	               onClick={() =>
+			   router.push({
+			       pathname: `${CHAT_ROUTE}/${doc.id}`,
+ 			       query: { textbookId: doc.id },
+			   })
+                       }>
+		      <h1 className="mb-2 font-bold text-lg">{doc.name}</h1>
+		      <p>{doc.desc}</p>
+		  </div>
+              ))}
+          </div>
       </div>
       <div
         className={
@@ -213,10 +218,9 @@ export default function Library() {
                   <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">
                     PDF File
                   </p>
-                  {fileRef.current ? (
+                  {fileRef.current && fileRef.current.files[0] ? (
                     <p class="text-xs text-gray-500 dark:text-gray-400">
-                      {" "}
-                      {fileRef.current.files[0].name}{" "}
+                      {fileRef.current.files[0].name}
                     </p>
                   ) : null}
                 </div>

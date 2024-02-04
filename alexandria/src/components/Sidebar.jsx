@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const Sidebar = () => {
     return (
-        <div>
+        <div className="w-1/5">
             <div className={"flex flex-col bg-stone-900 w-full grow-1 h-screen"}>
                 <div className="flex-row flex grow-8 px-8 gap-1">
                     <div className='py-10'>
