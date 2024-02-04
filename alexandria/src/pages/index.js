@@ -33,12 +33,6 @@ export default function Home() {
 
   return (
     <div>
-      <Auth
-        setToken={setToken}
-        setUser={setUser}
-        setEmail={setEmail}
-        token={token}
-      />
       <Navbar />
       <Landing />
     </div>

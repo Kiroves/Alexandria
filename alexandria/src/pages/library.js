@@ -5,8 +5,9 @@ import { getFirestore } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
 
 import { useState, useEffect } from "react";
+import Sidebar from "@/components/Sidebar.jsx";
 
-const CHAT_ROUTE = "/chat"
+const CHAT_ROUTE = "/textbook"
 
 export default function Library() {
     const [ name, setName ] = useState("");
@@ -45,23 +46,7 @@ export default function Library() {
     
     return (
 	<div className="flex flex-row h-screen">
-	    <div className={"flex flex-col bg-white grow-0 "}>
-		<div className="grow-8">
-		    <p className="p-10 pl-20 pr-20 text-black">Alexandria</p>
-		</div>
-		<div className="grow-8">
-		    <p className="p-5 pl-20 pr-20 text-black">Dashboard</p>
-		</div> 
-		<div className="grow-8">
-		    <p className="p-5 pl-20 pr-20 text-black">Trash</p>
-		</div>
-		<div className="grow-8">
-		    <p className="p-5 pl-20 pr-20 text-black">Account</p>
-		</div>
-		<div className="flex flex-col justify-end grow">
-		    <p className="p-10 pl-20 pr-20 text_black">Sign Out</p> 
-		</div>
-	    </div>
+	    <Sidebar/>
 	    <div className="grow h-full">
 		<h1>Hello, {name}</h1>
 		{library.map((document) => {
@@ -71,7 +56,7 @@ export default function Library() {
 				type="button"
 				onClick={() => router.push({
 				    pathname: `${CHAT_ROUTE}/${document.bookId}`,
-				    query: { chatId : document.bookId },
+				    query: { textbookId : document.bookId },
 				})
 					}>
 				{document.bookName}
