@@ -19,6 +19,8 @@ export default function Library() {
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState(null);
 
+  const [change, setChange] = useState(false);
+
   const fileRef = useRef(null);
 
   const handleFileChange = (event) => {
@@ -72,7 +74,7 @@ export default function Library() {
     };
 
     getTextbooks();
-  }, []);
+  }, [change]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,6 +92,9 @@ export default function Library() {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      setIsOpen(false);
+      setChange(!change);
     } catch (err) {
       console.error(err);
     }
@@ -213,10 +218,9 @@ export default function Library() {
                   <p class="mb-4 text-xs text-gray-500 dark:text-gray-400">
                     PDF File
                   </p>
-                  {fileRef.current ? (
+                  {fileRef.current && fileRef.current.files[0] ? (
                     <p class="text-xs text-gray-500 dark:text-gray-400">
-                      {" "}
-                      {fileRef.current.files[0].name}{" "}
+                      {fileRef.current.files[0].name}
                     </p>
                   ) : null}
                 </div>
