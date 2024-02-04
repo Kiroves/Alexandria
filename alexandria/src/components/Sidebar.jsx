@@ -4,7 +4,7 @@ import Image from 'next/image'
 const Sidebar = () => {
     return (
         <div>
-            <div className={"flex flex-col bg-stone-900 grow-0 h-screen"}>
+            <div className={"flex flex-col bg-stone-900 w-full grow-1 h-screen"}>
                 <div className="flex-row flex grow-8 px-8 gap-1">
                     <div className='py-10'>
                         <Image width={35} height={35} src="/book.png" />
