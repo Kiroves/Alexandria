@@ -133,3 +133,5 @@ dist
 .pnp.*
 
 /backend/venv
+
+/backend/alexandria-a4b39-firebase-adminsdk-32ahb-804d2d68bf.json
