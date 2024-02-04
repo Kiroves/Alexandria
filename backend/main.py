@@ -75,7 +75,7 @@ def upsert(texts, index):
     #     }
     #     docs.append((str(i), embedding, metadata))
     
-    index.upsert(docs, batch_size=32)
+    # index.upsert(docs, batch_size=32)
 
     return vectorstore
     
@@ -89,17 +89,17 @@ def query(llm, vectorstore, prompt):
         retriever=vectorstore.as_retriever()
     )
 
-    response = qa.invoke(query)
+    response = qa.invoke(prompt)
     return response
     
-def execute_query(query):
+def execute_query(q, index_name):
     init_log()
     llm = ChatOpenAI(temperature=0, openai_api_key=OPENAI_API_KEY)
     index = pc.Index(index_name)
 
-    texts = split_text(pc, index, 3, 10)
-    vstore = upsert(texts, index)
-    return query(llm, vstore, query)
+    # texts = split_text(pc, index, 3, 10)
+    vstore = upsert([], index)
+    return query(llm, vstore, q)
 
 
     

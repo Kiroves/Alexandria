@@ -55,10 +55,16 @@ def textbooks(email):
     else:
         return jsonify({'error': 'only post and get are allowed'}), 400
 # Flask endpoint for handling GET and POST requests
-@app.route('/upload/<email>/<name>/<desc>/<pdf>', methods=['POST'])
-def upload(email,name,desc,pdf):
+@app.route('/upload', methods=['POST'])
+def upload():
+
     if request.method == 'POST':
-        if not email or not name or not id or not pdf:
+        email = request.form['email']
+        name = request.form['name']
+        desc = request.form['desc']
+        file = request.files['file']
+
+        if not email or not name or not file:
             return jsonify({'error': 'User info not provided'}), 400
         col = db.collection(email)
         new_uuid = str(uuid.uuid4())
@@ -66,31 +72,45 @@ def upload(email,name,desc,pdf):
         data["name"] = name
         data["id"] = new_uuid
         data["desc"] = desc
-        data["pdf"] = pdf
+        # data["pdf"] = file.read()
         col.document(new_uuid).set(data)
+
+        destination_folder = 'data'
+
+        file.save(f"{destination_folder}/{new_uuid}.pdf")
+
+
         return jsonify({"success": True})
     else:
         return jsonify({'error': 'only post and get are allowed'}), 400
-@app.route('/query/<email>/<doc>/<query>', methods=['GET'])
-def query(email,doc, query):
+@app.route('/query', methods=['GET'])
+def query():
     if request.method == 'GET':
-        if not email or not query:
+        body = request.get_json()
+
+        index = body.get('index')
+        query = body.get('query')
+
+        if not index or not query:
             return jsonify({'error': 'User info not provided'}), 400
-        col = db.collection(email).document(doc)
-        field_value = col.get().to_dict().get("pdf")
+        # col = db.collection(email).document(doc)
+        # field_value = col.get().to_dict().get("pdf")
         # Specify the directory path
-        directory_path = '/data/companion'
+        # directory_path = '/data/companion'
 
         # Specify the file name
-        file_name = 'companion.pdf'
+        # file_name = 'companion.pdf'
 
         # Combine the directory path and file name to create the full file path
-        full_file_path = os.path.join(directory_path, file_name)
+        # full_file_path = os.path.join(directory_path, file_name)
 
         # Open the file in write mode ('w') and write the content to it
-        with open(full_file_path, 'w') as file:
-            file.write(field_value)
-        ret = execute_query(query)
+        # with open(full_file_path, 'w') as file:
+        #     file.write(field_value)
+
+        print(index, query)
+
+        ret = execute_query(query, "alexandria-test-2")
         return jsonify({"response": ret})
     else:
         return jsonify({'error': 'only post and get are allowed'}), 400
