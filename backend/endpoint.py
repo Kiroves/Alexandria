@@ -20,7 +20,19 @@ default_app = firebase_admin.initialize_app(
     }
 )
 db = firestore.client()
-
+# Flask endpoint for handling GET and POST requests
+@app.route('/info/<email>/<textbookid>', methods=['GET'])
+def info(email, textbookid):
+    if request.method == 'GET':
+        user_email = email
+        if user_email and textbookid:
+            col = db.collection(email).document(textbookid).get()
+            bean = col.to_dict()
+            return jsonify(bean)
+        else:
+            return jsonify({'error': 'User email not provided'}), 400
+    else:
+        return jsonify({'error': 'only post and get are allowed'}), 400
 # Flask endpoint for handling GET and POST requests
 @app.route('/textbooks/<email>', methods=['GET'])
 def textbooks(email):
