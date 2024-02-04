@@ -21,7 +21,17 @@ const Auth = ({ }) => {
     const router = useRouter();
 
     const handleGoogleClick = async (e) => {
-        await handleGoogle();
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            window.localStorage.setItem("token", token);
+            window.localStorage.setItem("email", result.user.email);
+            router.push("/library");
+        } catch (error) {
+            console.log("error", error);
+        }
     };
     const handleSignOut = async () => {
         try {

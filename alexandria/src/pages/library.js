@@ -18,6 +18,7 @@ export default function Library() {
   const [library, setLibrary] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState(null);
+  const [search, setSearch] = useState("");
 
   const [change, setChange] = useState(false);
 
@@ -75,7 +76,9 @@ export default function Library() {
 
     getTextbooks();
   }, [change]);
-
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -121,6 +124,7 @@ export default function Library() {
 		  className="p-4 rounded-lg w-4/5"
 		  type="text"
 		  placeholder="Search"
+            onChange={handleSearch}
               ></input>
           </div>
 
@@ -134,7 +138,14 @@ export default function Library() {
 		  {" "}
 		  +{" "}
               </div>
-              {library.map((doc, index) => (
+          {library.filter(doc => {
+            // Check if the name or description loosely contains the search term
+            const searchTerm = search.toLowerCase();
+            return (
+              doc.name.toLowerCase().includes(searchTerm) ||
+              doc.desc.toLowerCase().includes(searchTerm)
+            );
+          }).map((doc, index) => (
 		  <div className="bg-white text-black overflow-hidden rounded-lg min-h-44 p-4"
 	               onClick={() =>
 			   router.push({
