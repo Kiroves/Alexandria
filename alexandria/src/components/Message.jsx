@@ -13,7 +13,7 @@ const Message = ({ name, message }) => {
                     </div>
                 )}
                 {name === 'Alexandria' && (
-                    <Image width={ imageWidth} height={ imageWidth} src="/book.png" alt="book" />
+                    <Image width={ 90} height={ 90} src="/book.png" alt="book" />
                 )}
             </div>
             <div className="flex flex-col">

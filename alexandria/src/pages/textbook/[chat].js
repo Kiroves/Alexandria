@@ -6,25 +6,42 @@ const LIB_ROUTE = "/library";
 import axios from "axios";
 
 export default function Chat() {
-    const router = useRouter();
-    const { textbookId } = router.query;
+  const router = useRouter();
+  const { textbookId } = router.query;
 
-    const [textbook, setTextbook] = useState({});
+  const [textbook, setTextbook] = useState({});
 
-    const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
 
-    const [input, setInput] = useState("");
+  const [input, setInput] = useState("");
 
-    const handleInput = (e) => {
-	setInput(e.target.value);
+  const handleInput = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleSend = async (e) => {
+    e.preventDefault();
+    const content = input;
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { who: "You", msg: content },
+    ]);
+    setInput("");
+    try {
+      const res = await axios.get("http://127.0.0.1:5000/query", {
+        params: {
+          index: "alexandria",
+          query: content,
+        },
+      });
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { who: "Alexandria", msg: res.data.response.result },
+      ]);
+    } catch (err) {
+      console.error(err);
     }
-
-    const handleSend = (e) => {
-	e.preventDefault();
-	const content = input;
-	setMessages((prevMessages) => [...prevMessages, {who : "You", msg : content} ]);
-	setInput("")
-    }
+  };
 
   useEffect(() => {
     const getTextbook = async () => {
@@ -47,28 +64,30 @@ export default function Chat() {
       <Sidebar2 />
       <div className="flex flex-row grow-0">
         <div className="flex grow-0 flex-col justify-end h-full px-24 ">
-	    <div className="invisible">
-		<Message
-		    name="Alexandria"
-		    message="A circuit is a closed loop or pathway through which electric current can flow. It typically consists of various electronic components, such as resistors, capacitors, inductors, and semiconductor devices like transistors or integrated circuits, connected by conductive wires or traces."
-		/>
-	    </div>
+          <div className="invisible">
+            <Message
+              name="Alexandria"
+              message="A circuit is a closed loop or pathway through which electric current can flow. It typically consists of various electronic components, such as resistors, capacitors, inductors, and semiconductor devices like transistors or integrated circuits, connected by conductive wires or traces."
+            />
+          </div>
 
+          {messages.map((message, index) => {
+            return (
+              <div className="pb-12 w-full">
+                <Message key={index} name={message.who} message={message.msg} />
+              </div>
+            );
+          })}
 
-	    {
-		messages.map((message, index) => {
-		    return (
-			<div className="pb-12 w-full">
-			    <Message key={index} name={message.who} message={message.msg}/>
-			</div>
-		    );
-		})
-	    }
-
-            <div className=" py-12 h-12 relative">
-		<form onSubmit={handleSend}>
-		    <input value={input} onChange={handleInput} className="w-full pl-5 h-12 top-[13px] absolute rounded-lg bg-stone-900 text-neutral-500 text-lg font-normal font-['Satoshi-Light']" placeholder="Message Alexandria"/>
-		    </form>
+          <div className=" py-12 h-12 relative">
+            <form onSubmit={handleSend}>
+              <input
+                value={input}
+                onChange={handleInput}
+                className="w-full pl-5 h-12 top-[13px] absolute rounded-lg bg-stone-900 text-neutral-500 text-lg font-normal font-['Satoshi-Light']"
+                placeholder="Message Alexandria"
+              />
+            </form>
           </div>
         </div>
       </div>

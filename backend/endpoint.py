@@ -91,10 +91,8 @@ def upload():
 @app.route('/query', methods=['GET'])
 def query():
     if request.method == 'GET':
-        body = request.get_json()
-
-        index = body.get('index')
-        query = body.get('query')
+        index = request.args.get('index')
+        query = request.args.get('query')
 
         if not index or not query:
             return jsonify({'error': 'User info not provided'}), 400
