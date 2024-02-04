@@ -48,8 +48,10 @@ def textbooks(email):
 
             if not textbooks:  # Check if no documents were found
                 return jsonify({"textbooks": []})
-            
-            return jsonify({"textbooks": textbooks})
+            try:
+                return jsonify({"textbooks": textbooks})
+            except:
+                return jsonify({"textbooks": []})
         else:
             return jsonify({'error': 'User email not provided'}), 400
     else:
