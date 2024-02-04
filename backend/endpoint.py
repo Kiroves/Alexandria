@@ -30,16 +30,21 @@ def textbooks(email):
             col = db.collection(email)
             documents = col.stream()
             textbooks = []
+
             for doc in documents:
                 textbooks.append(doc.to_dict())
-                return jsonify({"textbooks": textbooks})
+
+            if not textbooks:  # Check if no documents were found
+                return jsonify({"textbooks": []})
+            
+            return jsonify({"textbooks": textbooks})
         else:
             return jsonify({'error': 'User email not provided'}), 400
     else:
         return jsonify({'error': 'only post and get are allowed'}), 400
 # Flask endpoint for handling GET and POST requests
-@app.route('/upload/<email>/<name>/<id>/<pdf>', methods=['POST'])
-def upload(email,name,id,pdf):
+@app.route('/upload/<email>/<name>/<desc>/<pdf>', methods=['POST'])
+def upload(email,name,desc,pdf):
     if request.method == 'POST':
         if not email or not name or not id or not pdf:
             return jsonify({'error': 'User info not provided'}), 400
@@ -47,7 +52,8 @@ def upload(email,name,id,pdf):
         new_uuid = str(uuid.uuid4())
         data = {}
         data["name"] = name
-        data["id"] = id
+        data["id"] = new_uuid
+        data["desc"] = desc
         data["pdf"] = pdf
         col.document(new_uuid).set(data)
         return jsonify({"success": True})
