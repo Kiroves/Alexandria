@@ -1,4 +1,5 @@
 #hi
+import time
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 import json
@@ -80,6 +81,8 @@ def upload():
         destination_folder = 'data'
 
         file.save(f"{destination_folder}/{new_uuid}.pdf")
+
+        time.sleep(5)
 
 
         return jsonify({"success": True})
