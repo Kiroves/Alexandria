@@ -1,17 +1,19 @@
 import React from 'react'
 import Image from 'next/image'
 
+const imageWidth = 30;
+
 const Message = ({ name, message }) => {
     return (
         <div className="flex grow-1 flex-row gap-6 py-4">
             <div className="flex flex-col h-full pl-8">
                 {name === 'You' && (
                     <div>
-                        <Image className="rounded-full" width={90} height={90} src="/pizza.jpg" alt="Pizza" />
+                        <Image className="rounded-full" width={imageWidth} height={imageWidth} src="/pizza.jpg" alt="Pizza" />
                     </div>
                 )}
                 {name === 'Alexandria' && (
-                    <Image width={ 90} height={ 90} src="/book.png" alt="book" />
+                    <Image width={ imageWidth} height={ imageWidth} src="/book.png" alt="book" />
                 )}
             </div>
             <div className="flex flex-col">
