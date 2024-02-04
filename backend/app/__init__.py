@@ -1,7 +1,7 @@
 from flask import Flask
 
 from .routes.main import main_blueprint  # Import the blueprint
-
+from .routes.textbook import textbook_blueprint
 import firebase_admin
 from firebase_admin import credentials
 
@@ -17,5 +17,6 @@ def create_app():
     firebase_admin.initialize_app(cred)
 
     app.register_blueprint(main_blueprint) 
+    app.register_blueprint(textbook_blueprint) 
 
     return app

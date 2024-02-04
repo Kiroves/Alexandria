@@ -89,18 +89,18 @@ def query(llm, vectorstore, prompt):
         retriever=vectorstore.as_retriever()
     )
 
-    # response = qa.invoke(query)
+    response = qa.invoke(query)
+    return response
     
-def main():
+def execute_query(query):
     init_log()
     llm = ChatOpenAI(temperature=0, openai_api_key=OPENAI_API_KEY)
     index = pc.Index(index_name)
 
     texts = split_text(pc, index, 3, 10)
     vstore = upsert(texts, index)
-    query(llm, vstore, "what is a combinatorial circuit")
+    return query(llm, vstore, query)
 
-main()
 
     
     
