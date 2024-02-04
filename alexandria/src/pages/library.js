@@ -63,22 +63,22 @@ export default function Library() {
 		</div>
 	    </div>
 	    <div className="grow h-full">
-		{/* <h1>Hello, {name}</h1> */} 
-		{/* {library.map((document) => { */} 
-		{/*     return ( */} 
-		{/* 	<div key={document.bookId}> */} 
-		{/* 	    <button */} 
-		{/* 		type="button" */} 
-		{/* 		onClick={() => router.push({ */} 
-		{/* 		    pathname: `${CHAT_ROUTE}/${document.bookId}`, */} 
-		{/* 		    query: { chatId : document.bookId }, */} 
-		{/* 		}) */} 
-		{/* 			}> */} 
-		{/* 		{document.bookName} */} 
-		{/* 	    </button> */} 
-		{/* 	</div> */} 
-		{/*     ); */} 
-		{/* })} */}
+		<h1>Hello, {name}</h1>
+		{library.map((document) => {
+		    return (
+			<div key={document.bookId}>
+			    <button
+				type="button"
+				onClick={() => router.push({
+				    pathname: `${CHAT_ROUTE}/${document.bookId}`,
+				    query: { chatId : document.bookId },
+				})
+					}>
+				{document.bookName}
+			    </button>
+			</div>
+		    );
+		})}
 
 		<div className="p-5 text-center">
 		    <input className="p-4 rounded-lg w-4/5" type="text"
@@ -97,7 +97,7 @@ export default function Library() {
 		    ))}
 		</div>
 	    </div>
-	    <div className={"modal absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg pl-20 pr-20 pt-8 pb-8 bg-white flex flex-col text-center "
+	    <div className={"modal absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg pl-20 pr-20 pt-8 pb-8 bg-white flex flex-col text-center drop-shadow-2xl "
 			    + (isOpen ? "opacity-100 z-50" : "opacity-0")}>
 		<div className="p-4">
 		    <h1 className="text-2xl font-bold mb-4 text-left">Alexandria</h1>
@@ -106,19 +106,19 @@ export default function Library() {
 		    <div className="mb-4">
 			<input
 			    type="text"
-			    className="form-input mt-1 block w-full p-2 border border-gray-700 rounded-sm"
+			    className="form-input mt-1 block w-full p-2 border border-gray-700 rounded-md"
 			    placeholder="Name"
 			/>
 		    </div>
 		    <div className="mb-4">
 			<input
 			    type="text"
-			    className="form-input mt-1 block w-full p-2 mb-10 border border-gray-700 rounded-sm"
+			    className="form-input mt-1 block w-full p-2 mb-10 border border-gray-700 rounded-md"
 			    placeholder="Description"
 			/>
 		    </div>
 		    <button
-			className="bg-blue-500 text-white py-3 px-24 rounded hover:bg-blue-600"
+			className="bg-blue-500 text-white py-3 px-24 rounded-md hover:bg-blue-600"
 		    >
 			Save Changes
 		    </button>
