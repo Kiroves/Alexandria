@@ -92,6 +92,7 @@ export default function Library() {
     formData.append("email", window.localStorage.getItem("email"));
     if (name === "" || desc === "" || file === "" || email === "") {
       alert("Please fill in all required fields and try again.");
+      return
     }
     try {
       setLoading(true);
