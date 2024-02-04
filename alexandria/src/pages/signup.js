@@ -11,17 +11,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 const LIB_ROUTE = "/library"
 
-export default function Home() {
-  const router = useRouter();
-
-  return (
-    <div className="flex flex-row">
-      <div>
-
-      </div>
-      <div className="">
-
-      </div>
-    </div>
-  );
+export default function signup() {
+    return (
+        <div>
+            
+        </div>
+    );
 }
