@@ -2,9 +2,12 @@ import React from 'react'
 import dotenv from 'dotenv'
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "@/util/firebase";
+import { useRouter } from 'next/router';
 dotenv.config();
 
-const Auth = ({ setToken, setUser, setEmail, token }) => {
+const Auth = ({ }) => {
+    const router = useRouter();
+
     const handleGoogle = async (e) => {
         const provider = new GoogleAuthProvider();
         try {
@@ -13,9 +16,7 @@ const Auth = ({ setToken, setUser, setEmail, token }) => {
             const token = credential.accessToken;
             window.localStorage.setItem("token", token);
             window.localStorage.setItem("email", result.user.email);
-            setToken(token);
-            setUser(result.user.displayName);
-            setEmail(result.user.email);
+            router.push("/library")
         } catch (error) { 
             console.log("error")
         }
@@ -23,7 +24,6 @@ const Auth = ({ setToken, setUser, setEmail, token }) => {
     const handleSignOut = async () => {
         try {
             // Call the provided callback from props
-            setToken(null);
             window.localStorage.removeItem("token");
         } catch (error) {
             console.error("Sign out error:", error);
@@ -31,15 +31,9 @@ const Auth = ({ setToken, setUser, setEmail, token }) => {
     };
   return (
     <div>
-          {token ? (
-              <button onClick={handleSignOut} variant="ghost" className="">
-                  Sign Out
-              </button>
-          ) : (
-              <button onClick={handleGoogle} variant="ghost" className="">
-                  Sign in with Google
-              </button>
-          )}
+        <button onClick={handleGoogle} variant="ghost" className="w-full px-4 py-2 border border-white rounded-md text-white text-xl font-medium font-['Satoshi']-medium">
+            Sign in with Google
+        </button>
     </div>
   )
 }

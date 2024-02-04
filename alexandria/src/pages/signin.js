@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import Auth from "@/components/Auth";
 import { useRouter } from "next/router";
 
-export default function signup() {
+export default function signin() {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ export default function signup() {
 
     const auth = getAuth();
 
-    createUserWithEmailAndPassword(auth, formData.email, formData.password)
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((user) => {
         console.log(user);
 
@@ -63,7 +63,7 @@ export default function signup() {
               Welcome!
             </h1>
             <h2 className="text-white text-lg font-normal font-['Satoshi']-regular">
-              Sign up to start your journey
+              Sign in to continue your journey
             </h2>
           </div>
           <div className="">
@@ -106,7 +106,7 @@ export default function signup() {
                 className="w-full px-4 py-2 bg-sky-500 rounded-md text-white text-xl font-medium font-['Satoshi']-medium"
                 type="submit"
               >
-                Sign Up
+                Sign In
               </button>
             </form>
             <div className="w-full my-4 text-center text-white font-medium font-['Satoshi']-medium">
