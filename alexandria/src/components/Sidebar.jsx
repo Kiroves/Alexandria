@@ -29,6 +29,11 @@ const Sidebar = () => {
                     </div>
                     <p className="py-5 text-white font-['Satoshi-Regular']">Account</p>
                 </div>
+                <div className="flex-row flex grow-8 gap-2 pl-48 pr-2">
+                    <div className='py-5'>
+                        <Image className="rounded-full" width={25} height={25} src="/less.png" />
+                    </div>
+                </div>
                 <div className="flex flex-col justify-end grow">
                     <div className="flex flex-row px-12 gap-2">
                         <div className="py-10">

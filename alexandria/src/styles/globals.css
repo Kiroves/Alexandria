@@ -11,3 +11,21 @@
 .guy_image {
   width: 500px;
 }
+.yigoat{ 
+  transition: width 0.5s ease;
+}
+
+.yigoat.clicked {
+  width: 0;
+  /* New state when clicked */
+}
+
+@keyframes widthAnimation{
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
