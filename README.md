@@ -54,5 +54,3 @@ Continued exploration of additional functionalities for PDFs beyond simple query
 - python
 - react
 - tailwindcss
-
-## Try it out
